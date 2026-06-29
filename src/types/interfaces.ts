@@ -76,5 +76,11 @@ export interface DiscoverMovies {
   results: BaseMovieProps[];
 }
 
-
+export interface Review {
+  author: string;
+  content: string;
+  agree: boolean;
+  rating: number;
+  movieId: number;
+}
 
