@@ -5,6 +5,7 @@ import { BaseMovieProps, DiscoverMovies } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
+import PlaylistAdd from "../components/cardIcons/playlistAdd";
 
 const UpcomingMoviesPage: React.FC = () => {
   const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
@@ -27,7 +28,12 @@ const UpcomingMoviesPage: React.FC = () => {
       title="Upcoming Movies"
       movies={movies}
       action={(movie: BaseMovieProps) => {
-        return <AddToFavouritesIcon {...movie} />;
+        return (
+          <>
+            <AddToFavouritesIcon {...movie} />
+            <PlaylistAdd {...movie} />
+          </>
+        );
       }}
     />
   );
