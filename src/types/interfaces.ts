@@ -84,3 +84,19 @@ export interface Review {
   movieId: number;
 }
 
+export interface BaseTVProps {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  first_air_date: string;
+  vote_average: number;
+}
+
+export interface DiscoverTV {
+  page: number;
+  total_pages: number;
+  total_results: number;
+  results: BaseTVProps[];
+}
+
