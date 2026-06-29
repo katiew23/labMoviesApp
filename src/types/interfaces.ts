@@ -100,3 +100,13 @@ export interface DiscoverTV {
   results: BaseTVProps[];
 }
 
+export interface TVDetailsProps extends BaseTVProps {
+  number_of_seasons: number;
+  number_of_episodes: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  status: string;
+  tagline: string;
+}

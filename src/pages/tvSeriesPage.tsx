@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { getTVSeries } from "../api/tmdb-api";
 import { DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
+import { Link } from "react-router-dom";
 
 const TVSeriesPage: React.FC = () => {
   const { data, error, isLoading, isError } = useQuery<DiscoverTV, Error>(
@@ -26,7 +27,7 @@ const TVSeriesPage: React.FC = () => {
       <ul>
         {tvSeries.map((series) => (
           <li key={series.id}>
-            {series.name}
+            <Link to={`/tv/${series.id}`}>{series.name}</Link>
           </li>
         ))}
       </ul>
