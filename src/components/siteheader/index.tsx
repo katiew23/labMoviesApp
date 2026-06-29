@@ -13,25 +13,26 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const styles = {
-    title: {
-      flexGrow: 1,
-    },
-  };
+  title: {
+    flexGrow: 1,
+  },
+};
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement|null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const menuOptions = [
-  { label: "Home", path: "/" },
-  { label: "Favorites", path: "/movies/favourites" },
-  { label: "Upcoming", path: "/movies/upcoming" },
-];
+    { label: "Home", path: "/" },
+    { label: "Favorites", path: "/movies/favourites" },
+    { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Must Watch", path: "/movies/mustwatch" },
+  ];
 
   const handleMenuSelect = (pageURL: string) => {
     navigate(pageURL);
