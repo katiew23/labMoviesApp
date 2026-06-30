@@ -1,9 +1,10 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { getTVSeries } from "../api/tmdb-api";
-import { DiscoverTV } from "../types/interfaces";
+import { BaseTVProps, DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
-import { Link } from "react-router-dom";
+import TVSeriesCard from "../components/tvSeriesCard";
+import Grid from "@mui/material/Grid";
 
 const TVSeriesPage: React.FC = () => {
   const { data, error, isLoading, isError } = useQuery<DiscoverTV, Error>(
@@ -24,13 +25,19 @@ const TVSeriesPage: React.FC = () => {
   return (
     <>
       <h1>Popular TV Series</h1>
-      <ul>
+
+      <Grid container spacing={5} style={{ padding: "15px" }}>
         {tvSeries.map((series) => (
-          <li key={series.id}>
-            <Link to={`/tv/${series.id}`}>{series.name}</Link>
-          </li>
+          <Grid key={series.id} item xs={12} sm={6} md={4} lg={3}>
+            <TVSeriesCard
+              series={series}
+              action={(series: BaseTVProps) => {
+                return null;
+              }}
+            />
+          </Grid>
         ))}
-      </ul>
+      </Grid>
     </>
   );
 };
