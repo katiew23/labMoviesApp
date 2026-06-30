@@ -91,6 +91,7 @@ export interface BaseTVProps {
   poster_path: string;
   first_air_date: string;
   vote_average: number;
+  genre_ids: number[];
 }
 
 export interface DiscoverTV {
@@ -103,10 +104,7 @@ export interface DiscoverTV {
 export interface TVDetailsProps extends BaseTVProps {
   number_of_seasons: number;
   number_of_episodes: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
+  genres: {id: number; name: string;}[];
   status: string;
   tagline: string;
 }
