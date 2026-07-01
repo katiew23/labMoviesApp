@@ -5,7 +5,7 @@ interface MovieContextInterface {
     favourites: number[];
     favouriteTVSeries: number[];
     mustWatch: number[];
-    addToFavourites: (movie: BaseMovieProps) => void;
+    addToFavourites: (movie?: BaseMovieProps) => void;
     removeFromFavourites: (movie: BaseMovieProps) => void;
     addToFavouritesTVSeries: (tvSeries: BaseTVProps) => void;
     removeFromFavouritesTVSeries: (tvSeries: BaseTVProps) => void;
@@ -35,14 +35,19 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({ children }) 
     const [myReviews, setMyReviews] = useState<Review[]>([]);
     const [favouriteTVSeries, setFavouriteTVSeries] = useState<number[]>([]);
     
-    const addToFavourites = useCallback((movie: BaseMovieProps) => {
-        setFavourites((prevFavourites) => {
-            if (!prevFavourites.includes(movie.id)) {
-                return [...prevFavourites, movie.id];
-            }
-            return prevFavourites;
-        });
-    }, []);
+    const addToFavourites = useCallback((movie?: BaseMovieProps) => {
+    if (!movie) {
+        console.log("No movie passed to addToFavourites");
+        return;
+    }
+
+    setFavourites((prevFavourites) => {
+        if (!prevFavourites.includes(movie.id)) {
+            return [...prevFavourites, movie.id];
+        }
+        return prevFavourites;
+    });
+}, []);
     
     const removeFromFavourites = useCallback((movie: BaseMovieProps) => {
         setFavourites((prevFavourites) =>
