@@ -1,11 +1,14 @@
 import React, { useState, useCallback } from "react";
-import { BaseMovieProps, Review } from "../types/interfaces";
+import { BaseMovieProps, BaseTVProps, Review } from "../types/interfaces";
 
 interface MovieContextInterface {
     favourites: number[];
+    favouriteTVSeries: number[];
     mustWatch: number[];
     addToFavourites: (movie: BaseMovieProps) => void;
     removeFromFavourites: (movie: BaseMovieProps) => void;
+    addToFavouritesTVSeries: (tvSeries: BaseTVProps) => void;
+    removeFromFavouritesTVSeries: (tvSeries: BaseTVProps) => void;
     addReview: (movie: BaseMovieProps, review: Review) => void;
     addToMustWatch: (movie: BaseMovieProps) => void;
     removeFromMustWatch?: (movie: BaseMovieProps) => void;
@@ -13,9 +16,12 @@ interface MovieContextInterface {
 
 const initialContextState: MovieContextInterface = {
     favourites: [],
+    favouriteTVSeries: [],
     mustWatch: [],
     addToFavourites: () => {},
     removeFromFavourites: () => {},
+    addToFavouritesTVSeries: () => {},
+    removeFromFavouritesTVSeries: () => {},
     addReview: () => {},
     addToMustWatch: () => {},
     removeFromMustWatch: () => {},
@@ -27,6 +33,7 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({ children }) 
     const [favourites, setFavourites] = useState<number[]>([]);
     const [mustWatch, setMustWatch] = useState<number[]>([]);
     const [myReviews, setMyReviews] = useState<Review[]>([]);
+    const [favouriteTVSeries, setFavouriteTVSeries] = useState<number[]>([]);
     
     const addToFavourites = useCallback((movie: BaseMovieProps) => {
         setFavourites((prevFavourites) => {
@@ -67,17 +74,40 @@ const removeFromMustWatch = useCallback((movie: BaseMovieProps) => {
     });
 }, []);
 
+const addToFavouritesTVSeries = useCallback((tvSeries?: BaseTVProps) => {
+    if (!tvSeries) {
+        console.log("No TV series passed to addToFavouritesTVSeries");
+        return;
+    }
+
+    setFavouriteTVSeries((prevFavourites) => {
+        if (!prevFavourites.includes(tvSeries.id)) {
+            return [...prevFavourites, tvSeries.id];
+        }
+        return prevFavourites;
+    });
+}, []);
+
+const removeFromFavouritesTVSeries = useCallback((tvSeries: BaseTVProps) => {
+    setFavouriteTVSeries((prevFavourites) =>
+        prevFavourites.filter((tId) => tId !== tvSeries.id)
+    );
+}, []);
+
 return (
     <MoviesContext.Provider
     value={{
-        favourites,
-        mustWatch,
-        addToFavourites,
-        removeFromFavourites,
-        addReview,
-        addToMustWatch,
-        removeFromMustWatch,
-    }}
+    favourites,
+    favouriteTVSeries,
+    mustWatch,
+    addToFavourites,
+    removeFromFavourites,
+    addToFavouritesTVSeries,
+    removeFromFavouritesTVSeries,
+    addReview,
+    addToMustWatch,
+    removeFromMustWatch,
+}}
     >
     {children}
     </MoviesContext.Provider>
