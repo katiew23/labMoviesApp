@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
-import { useQueries } from "react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
@@ -28,23 +28,25 @@ const FavouriteMoviesPage: React.FC = () => {
   );
 
   // Create an array of queries and run them in parallel.
-  const favouriteMovieQueries = useQueries(
-    movieIds.map((movieId) => {
-      return {
-        queryKey: ["movie", movieId],
-        queryFn: () => getMovie(movieId.toString()),
-      };
-    })
-  );
+ const favouriteMovieQueries = useQueries({
+  queries: movieIds.map((movieId) => {
+    return {
+      queryKey: ["movie", movieId],
+      queryFn: () => getMovie(movieId.toString()),
+    };
+  }),
+});
 
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteMovieQueries.find((m) => m.isLoading === true);
+  const isPending = favouriteMovieQueries.find((m) => m.isPending === true);
 
-  if (isLoading) {
+  if (isPending) {
     return <Spinner />;
   }
 
-  const allFavourites = favouriteMovieQueries.map((q) => q.data);
+  const allFavourites = favouriteMovieQueries
+  .map((q) => q.data)
+  .filter((movie) => movie !== undefined);
   const displayedMovies = allFavourites
     ? filterFunction(allFavourites)
     : [];

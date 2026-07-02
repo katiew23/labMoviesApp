@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getTVSeries } from "../api/tmdb-api";
 import { BaseTVProps, DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
@@ -11,12 +11,12 @@ import RemoveFromFavouritesTVSeries from "../components/cardIcons/removeFromFavo
 const FavouriteTVSeriesPage: React.FC = () => {
   const { favouriteTVSeries } = useContext(MoviesContext);
 
-  const { data, error, isLoading, isError } = useQuery<DiscoverTV, Error>(
-    "tvSeries",
-    getTVSeries
-  );
+  const { data, error, isPending, isError } = useQuery<DiscoverTV, Error>({
+    queryKey: ["tvSeries"],
+    queryFn: () => getTVSeries(),
+  });
 
-  if (isLoading) {
+  if (isPending) {
     return <Spinner />;
   }
 

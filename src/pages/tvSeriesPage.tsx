@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getTVSeries } from "../api/tmdb-api";
 import { BaseTVProps, DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
@@ -25,10 +25,18 @@ const genreFiltering = {
 const TVSeriesPage: React.FC = () => {
   const [page, setPage] = useState(1);
   
-  const { data, error, isLoading, isError } = useQuery<DiscoverTV, Error>(
-    ["tvSeries", page],
-    () => getTVSeries(page)
-  );
+  const {
+    data,
+    error,
+    isPending,
+    isError,
+    isFetching,
+    isPlaceholderData,
+  } = useQuery<DiscoverTV, Error>({
+    queryKey: ["tvSeries", page],
+    queryFn: () => getTVSeries(page),
+    placeholderData: keepPreviousData,
+  });
   
   const { filterValues, setFilterValues, filterFunction } = useFiltering([
     nameFiltering,
@@ -37,7 +45,7 @@ const TVSeriesPage: React.FC = () => {
   
   const [sortBy, setSortBy] = useState("name");
   
-  if (isLoading) {
+  if (isPending) {
     return <Spinner />;
   }
   
@@ -97,23 +105,36 @@ const TVSeriesPage: React.FC = () => {
     ))}
     </Grid>
     
-    <div style={{ display: "flex", justifyContent: "center", gap: "20px", margin: "20px" }}>
+    <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "20px",
+      margin: "20px",
+    }}
+    >
     <Button
     variant="contained"
     disabled={page === 1}
-    onClick={() => setPage(page - 1)}
+    onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 1))}
     >
     Previous
     </Button>
     
-    <span>Page {page}</span>
+    <span>
+    Page {page} of {data?.total_pages}
+    </span>
     
     <Button
     variant="contained"
-    onClick={() => setPage(page + 1)}
+    disabled={isPlaceholderData || page >= (data?.total_pages ?? page)}
+    onClick={() => setPage((oldPage) => oldPage + 1)}
     >
     Next
     </Button>
+    
+    {isFetching && <span>Loading...</span>}
     </div>
     
     <TVSeriesFilterUI

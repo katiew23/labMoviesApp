@@ -12,7 +12,7 @@ import Select from "@mui/material/Select";
 import { SelectChangeEvent } from "@mui/material";
 import { getTVGenres } from "../../api/tmdb-api";
 import { GenreData } from "../../types/interfaces";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import Spinner from "../spinner";
 
 const styles = {

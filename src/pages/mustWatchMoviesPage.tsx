@@ -3,7 +3,7 @@ import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { getMovie } from "../api/tmdb-api";
 import { BaseMovieProps, MovieDetailsProps } from "../types/interfaces";
-import { useQueries } from "react-query";
+import { useQueries } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
@@ -11,22 +11,24 @@ import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
 const MustWatchMoviesPage: React.FC = () => {
   const { mustWatch } = useContext(MoviesContext);
 
-  const mustWatchMovieQueries = useQueries(
-    mustWatch.map((movieId) => {
-      return {
-        queryKey: ["movie", movieId],
-        queryFn: () => getMovie(movieId.toString()),
-      };
-    })
-  );
+ const mustWatchMovieQueries = useQueries({
+  queries: mustWatch.map((movieId) => {
+    return {
+      queryKey: ["movie", movieId],
+      queryFn: () => getMovie(movieId.toString()),
+    };
+  }),
+});
 
-  const isLoading = mustWatchMovieQueries.find((m) => m.isLoading === true);
+  const isPending = mustWatchMovieQueries.find((m) => m.isPending === true);
 
-  if (isLoading) {
+  if (isPending) {
     return <Spinner />;
   }
 
-  const movies = mustWatchMovieQueries.map((q) => q.data) as MovieDetailsProps[];
+  const movies = mustWatchMovieQueries
+  .map((q) => q.data)
+  .filter((movie): movie is MovieDetailsProps => movie !== undefined);
 
   return (
     <PageTemplate
