@@ -8,7 +8,8 @@ import Grid from "@mui/material/Grid";
 import TVSeriesFilterUI, {nameFilter,genreFilter} from "../components/tvSeriesFilterUI";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesTVSeries from "../components/cardIcons/addToFavouritesTVSeries";
-import Button from "@mui/material/Button";
+//import Button from "@mui/material/Button";
+import PaginationControls from "../components/paginationControls";
 
 const nameFiltering = {
   name: "name",
@@ -105,37 +106,12 @@ const TVSeriesPage: React.FC = () => {
     ))}
     </Grid>
     
-    <div
-    style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      gap: "20px",
-      margin: "20px",
-    }}
-    >
-    <Button
-    variant="contained"
-    disabled={page === 1}
-    onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 1))}
-    >
-    Previous
-    </Button>
-    
-    <span>
-    Page {page} of {data?.total_pages}
-    </span>
-    
-    <Button
-    variant="contained"
-    disabled={isPlaceholderData || page >= (data?.total_pages ?? page)}
-    onClick={() => setPage((oldPage) => oldPage + 1)}
-    >
-    Next
-    </Button>
-    
-    {isFetching && <span>Loading...</span>}
-    </div>
+    <PaginationControls
+    page={page}
+    setPage={setPage}
+    totalPages={data?.total_pages}
+    isPlaceholderData={isPlaceholderData}
+    />
     
     <TVSeriesFilterUI
     onFilterValuesChange={changeFilterValues}

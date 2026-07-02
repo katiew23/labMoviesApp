@@ -9,6 +9,7 @@ import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import PlaylistAdd from "../components/cardIcons/playlistAdd";
 import Button from "@mui/material/Button";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import PaginationControls from "../components/paginationControls";
 
 const titleFiltering = {
   name: "title",
@@ -82,37 +83,12 @@ return (
   }}
   />
   
-  <div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "20px",
-    margin: "20px",
-  }}
-  >
-  <Button
-  variant="contained"
-  disabled={page === 1}
-  onClick={() => setPage((oldPage) => Math.max(oldPage - 1, 1))}
-  >
-  Previous
-  </Button>
-  
-  <span>
-  Page {page} of {data?.total_pages}
-  </span>
-  
-  <Button
-  variant="contained"
-  disabled={isPlaceholderData || page >= (data?.total_pages ?? page)}
-  onClick={() => setPage((oldPage) => oldPage + 1)}
-  >
-  Next
-  </Button>
-  
-  {isFetching && <span>Loading...</span>}
-  </div>
+ <PaginationControls
+  page={page}
+  setPage={setPage}
+  totalPages={data?.total_pages}
+  isPlaceholderData={isPlaceholderData}
+/>
   
   
   <MovieFilterUI
