@@ -16,6 +16,9 @@ import PopularMoviesPage from "./pages/popularMoviesPage";
 import TVSeriesPage from "./pages/tvSeriesPage";
 import TVSeriesDetailsPage from "./pages/tvSeriesDetailsPage";
 import FavouriteTVSeriesPage from "./pages/favouriteTVSeriesPage";
+import AuthContextProvider from "./contexts/authContext";
+import LoginPage from "./pages/loginPage";
+import PrivateRoute from "./components/privateRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,25 +34,28 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <MoviesContextProvider>
-          <SiteHeader />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
-            <Route path="/movies/:id" element={<MoviePage />} />
-            <Route path="/reviews/:id" element={<MovieReviewPage />} />
-            <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-            <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-            <Route path="/movies/mustwatch" element={<MustWatchMoviesPage />} />
-            <Route path="/movies/popular" element={<PopularMoviesPage />} />
-            <Route path="/tv" element={<TVSeriesPage />} />
-            <Route path="/tv/favourites" element={<FavouriteTVSeriesPage />} />
-            <Route path="/tv/:id" element={<TVSeriesDetailsPage />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </MoviesContextProvider>
+        <AuthContextProvider>
+          <MoviesContextProvider>
+            <SiteHeader />
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/movies/favourites" element={<PrivateRoute><FavouriteMoviesPage /></PrivateRoute>} />
+              <Route path="/movies/:id" element={<MoviePage />} />
+              <Route path="/reviews/:id" element={<MovieReviewPage />} />
+              <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+              <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+              <Route path="/movies/mustwatch" element={<PrivateRoute><MustWatchMoviesPage /></PrivateRoute>} />
+              <Route path="/movies/popular" element={<PopularMoviesPage />} />
+              <Route path="/tv" element={<TVSeriesPage />} />
+              <Route path="/tv/favourites" element={<PrivateRoute><FavouriteTVSeriesPage /></PrivateRoute>} />
+              <Route path="/tv/:id" element={<TVSeriesDetailsPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </MoviesContextProvider>
+        </AuthContextProvider>
       </BrowserRouter>
-      
     </QueryClientProvider>
   );
 };
