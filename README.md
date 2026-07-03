@@ -8,7 +8,16 @@ The app uses React Router for navigation, React Query for server state caching, 
 
 ### Discover Movies
 
-The home page displays a list of discover movies from TMDB. Users can filter movies by title and genre.
+The home page displays discover movies from TMDB.
+
+Users can search and filter movies using multiple criteria:
+
+* Movie title
+* Genre
+* Minimum rating
+* Release year
+
+This feature uses a reusable filtering hook to apply multiple filter conditions to the displayed movie list.
 
 ### Upcoming Movies
 
@@ -27,11 +36,30 @@ This feature includes:
 * A navigation menu link
 * React Query caching using the `"popular"` query key
 
+### TV Series
+
+A TV Series page was added using the TMDB TV series endpoints.
+
+This feature includes:
+
+* A TV series list page
+* TV series detail pages
+* TV series favourites
+* TV genre filtering
+* Multi-criteria search and filtering for TV series
+* Sorting by name, rating, and first air date
+
 ### Favourites
 
 Users can add movies to a favourites list. Favourite movie IDs are stored in the MoviesContext and displayed on a dedicated Favourites page.
 
 Users can also remove movies from their favourites.
+
+### Favourite TV Series
+
+Users can add TV series to a favourites list.
+
+Favourite TV series IDs are stored in the MoviesContext and displayed on a dedicated Favourite TV Series page. Users can also remove TV series from their favourites.
 
 ### Must Watch List
 
@@ -66,6 +94,12 @@ Current routes include:
 * `/movies/mustwatch` - Must Watch Movies
 * `/reviews/form` - Add Movie Review
 * `/reviews/:id` - Movie Review
+* `/login` - Login Page
+* `/tv` - TV Series
+* `/tv/:id` - TV Series Details
+* `/tv/favourites` - Favourite TV Series
+
+The favourites and must-watch routes are protected and require the user to be logged in.
 
 ## Server State Caching
 
@@ -89,6 +123,21 @@ The app is wrapped in a `QueryClientProvider`, and queries use cache keys such a
 * React Query
 * Material UI
 * TMDB API
+* React Context API
+
+### Authentication and Private Routes
+
+The app includes basic authentication using an AuthContext.
+
+Users can log in and log out. Private routes are protected using a PrivateRoute component.
+
+Protected routes include:
+
+* Favourite Movies
+* Must Watch Movies
+* Favourite TV Series
+
+If a logged-out user tries to access a protected route, they are redirected to the login page.
 
 ## Development Notes
 
