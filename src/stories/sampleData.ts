@@ -79,3 +79,60 @@ export default {
   vote_average: 7,
   vote_count: 9692,
 };
+
+export const SampleTVSeries = {
+  id: 1399,
+  name: "Game of Thrones",
+  overview: "Seven noble families fight for control of the mythical land of Westeros.",
+  poster_path: "/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
+  first_air_date: "2011-04-17",
+  vote_average: 8.4,
+  vote_count: 20000,
+  genre_ids: [18, 10765],
+  genres: [
+    {
+      id: 18,
+      name: "Drama",
+    },
+    {
+      id: 10765,
+      name: "Sci-Fi & Fantasy",
+    },
+  ],
+  number_of_seasons: 8,
+  number_of_episodes: 73,
+  tagline: "Winter is coming.",
+  status: "Ended",
+};
+
+export const SampleTVSeriesList = [
+  SampleTVSeries,
+  {
+    id: 66732,
+    name: "Stranger Things",
+    overview: "A group of young friends witness supernatural forces.",
+    poster_path: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+    first_air_date: "2016-07-15",
+    vote_average: 8.6,
+    vote_count: 18000,
+    genre_ids: [18, 10765, 9648],
+    genres: [
+      {
+        id: 18,
+        name: "Drama",
+      },
+      {
+        id: 10765,
+        name: "Sci-Fi & Fantasy",
+      },
+      {
+        id: 9648,
+        name: "Mystery",
+      },
+    ],
+    number_of_seasons: 5,
+    number_of_episodes: 42,
+    tagline: "Every ending has a beginning.",
+    status: "Returning Series",
+  },
+];
