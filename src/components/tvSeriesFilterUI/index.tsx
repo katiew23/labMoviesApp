@@ -30,6 +30,8 @@ interface TVSeriesFilterUIProps {
   onFilterValuesChange: (f: string, s: string) => void;
   nameFilter: string;
   genreFilter: string;
+  ratingFilter: string;
+  yearFilter: string;
   sortBy: string;
 }
 
@@ -37,6 +39,8 @@ const TVSeriesFilterUI: React.FC<TVSeriesFilterUIProps> = ({
   onFilterValuesChange,
   nameFilter,
   genreFilter,
+  ratingFilter,
+  yearFilter,
   sortBy,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -49,7 +53,7 @@ const TVSeriesFilterUI: React.FC<TVSeriesFilterUIProps> = ({
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >
-        Filter
+        Search & Filter Tv Series
       </Fab>
       <Drawer
         anchor="left"
@@ -60,6 +64,8 @@ const TVSeriesFilterUI: React.FC<TVSeriesFilterUIProps> = ({
           onUserInput={onFilterValuesChange}
           nameFilter={nameFilter}
           genreFilter={genreFilter}
+          ratingFilter={ratingFilter}
+          yearFilter={yearFilter}
           sortBy={sortBy}
         />
       </Drawer>

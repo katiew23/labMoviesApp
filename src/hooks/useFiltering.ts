@@ -23,6 +23,7 @@ const useFiltering = ( filters: Filter[]) => {
       });
     }, collection);
 
+   
   return {
     filterValues,
     setFilterValues,

@@ -30,12 +30,16 @@ interface FilterTVSeriesCardProps {
   onUserInput: (type: string, value: string) => void;
   nameFilter: string;
   genreFilter: string;
+  ratingFilter: string;
+  yearFilter: string;
   sortBy: string;
 }
 
 const FilterTVSeriesCard: React.FC<FilterTVSeriesCardProps> = ({
   nameFilter,
   genreFilter,
+  ratingFilter,
+  yearFilter,
   sortBy,
   onUserInput,
 }) => {
@@ -70,13 +74,20 @@ const FilterTVSeriesCard: React.FC<FilterTVSeriesCardProps> = ({
     onUserInput("sort", e.target.value);
   };
   
+  const handleRatingChange = (e: SelectChangeEvent) => {
+    onUserInput("rating", e.target.value);
+  };
+  
+  const handleYearChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onUserInput("year", e.target.value);
+  };
   return (
     <>
     <Card sx={styles.root} variant="outlined">
     <CardContent>
     <Typography variant="h5" component="h1">
     <FilterAltIcon fontSize="large" />
-    Filter TV Series.
+    Search & Filter TV Series.
     </Typography>
     
     <TextField
@@ -106,6 +117,33 @@ const FilterTVSeriesCard: React.FC<FilterTVSeriesCardProps> = ({
     })}
     </Select>
     </FormControl>
+    
+    <FormControl sx={styles.formControl}>
+    <InputLabel id="rating-label">Minimum Rating</InputLabel>
+    <Select
+    labelId="rating-label"
+    id="rating-select"
+    value={ratingFilter}
+    onChange={handleRatingChange}
+    >
+    <MenuItem value="0">All</MenuItem>
+    <MenuItem value="5">5+</MenuItem>
+    <MenuItem value="6">6+</MenuItem>
+    <MenuItem value="7">7+</MenuItem>
+    <MenuItem value="8">8+</MenuItem>
+    </Select>
+    </FormControl>
+    
+    <TextField
+    sx={styles.formControl}
+    id="year-filter"
+    label="First Air Year"
+    type="text"
+    value={yearFilter}
+    variant="filled"
+    onChange={handleYearChange}
+    placeholder="e.g. 2024"
+    />
     </CardContent>
     </Card>
     

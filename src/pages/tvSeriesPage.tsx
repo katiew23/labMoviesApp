@@ -5,23 +5,38 @@ import { BaseTVProps, DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
 import TVSeriesCard from "../components/tvSeriesCard";
 import Grid from "@mui/material/Grid";
-import TVSeriesFilterUI, {nameFilter,genreFilter} from "../components/tvSeriesFilterUI";
+import TVSeriesFilterUI from "../components/tvSeriesFilterUI";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesTVSeries from "../components/cardIcons/addToFavouritesTVSeries";
 //import Button from "@mui/material/Button";
 import PaginationControls from "../components/paginationControls";
 
-const nameFiltering = {
-  name: "name",
-  value: "",
-  condition: nameFilter,
-};
-
-const genreFiltering = {
-  name: "genre",
-  value: "0",
-  condition: genreFilter,
-};
+const tvSeriesFilters = [
+  {
+    name: "name",
+    value: "",
+    condition: (series: any, value: string) =>
+      series.name.toLowerCase().includes(value.toLowerCase()),
+  },
+  {
+    name: "genre",
+    value: "0",
+    condition: (series: any, value: string) =>
+      value === "0" || series.genre_ids.includes(Number(value)),
+  },
+  {
+    name: "rating",
+    value: "0",
+    condition: (series: any, value: string) =>
+      series.vote_average >= Number(value),
+  },
+  {
+    name: "year",
+    value: "",
+    condition: (series: any, value: string) =>
+      value === "" || series.first_air_date?.startsWith(value),
+  },
+];
 
 const TVSeriesPage: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -39,10 +54,7 @@ const TVSeriesPage: React.FC = () => {
     placeholderData: keepPreviousData,
   });
   
-  const { filterValues, setFilterValues, filterFunction } = useFiltering([
-    nameFiltering,
-    genreFiltering,
-  ]);
+  const { filterValues, setFilterValues, filterFunction } = useFiltering(tvSeriesFilters);
   
   const [sortBy, setSortBy] = useState("name");
   
@@ -55,18 +67,16 @@ const TVSeriesPage: React.FC = () => {
   }
   
   const changeFilterValues = (type: string, value: string) => {
-    if (type === "sort") {
-      setSortBy(value);
-    } else {
-      const changedFilter = { name: type, value: value };
-      const updatedFilterSet =
-      type === "name"
-      ? [changedFilter, filterValues[1]]
-      : [filterValues[0], changedFilter];
-      
-      setFilterValues(updatedFilterSet);
-    }
-  };
+  if (type === "sort") {
+    setSortBy(value);
+  } else {
+    const updatedFilterSet = filterValues.map((filter) =>
+      filter.name === type ? { ...filter, value } : filter
+    );
+
+    setFilterValues(updatedFilterSet);
+  }
+};
   
   const tvSeries = data ? data.results : [];
   const displayedTVSeries = filterFunction(tvSeries);
@@ -117,6 +127,8 @@ const TVSeriesPage: React.FC = () => {
     onFilterValuesChange={changeFilterValues}
     nameFilter={filterValues[0].value}
     genreFilter={filterValues[1].value}
+    ratingFilter={filterValues[2].value}
+    yearFilter={filterValues[3].value}
     sortBy={sortBy}
     />
     </>

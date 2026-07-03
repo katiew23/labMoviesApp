@@ -7,21 +7,36 @@ import { DiscoverMovies, BaseMovieProps } from "../types/interfaces";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import PlaylistAdd from "../components/cardIcons/playlistAdd";
-import Button from "@mui/material/Button";
+//import Button from "@mui/material/Button";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import PaginationControls from "../components/paginationControls";
 
-const titleFiltering = {
-  name: "title",
-  value: "",
-  condition: titleFilter,
-};
-
-const genreFiltering = {
-  name: "genre",
-  value: "0",
-  condition: genreFilter,
-};
+const movieFilters = [
+  {
+    name: "title",
+    value: "",
+    condition: (movie: any, value: string) =>
+      movie.title.toLowerCase().includes(value.toLowerCase()),
+  },
+  {
+    name: "genre",
+    value: "0",
+    condition: (movie: any, value: string) =>
+      value === "0" || movie.genre_ids.includes(Number(value)),
+  },
+  {
+    name: "rating",
+    value: "0",
+    condition: (movie: any, value: string) =>
+      movie.vote_average >= Number(value),
+  },
+  {
+    name: "year",
+    value: "",
+    condition: (movie: any, value: string) =>
+      value === "" || movie.release_date?.startsWith(value),
+  },
+];
 
 const HomePage: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -38,10 +53,8 @@ const { data, error, isPending, isError, isFetching, isPlaceholderData} = useQue
 //() => getMovies(page)
 // );
 
-const { filterValues, setFilterValues, filterFunction } = useFiltering([
-  titleFiltering,
-  genreFiltering,
-]);
+const { filterValues, setFilterValues, filterFunction } = useFiltering(movieFilters);
+ 
 
 if (isPending) {
   return <Spinner />;
@@ -52,13 +65,10 @@ if (isError) {
 }
 
 const changeFilterValues = (type: string, value: string) => {
-  const changedFilter = { name: type, value: value };
-  const updatedFilterSet =
-  type === "title"
-  ? [changedFilter, filterValues[1]]
-  : [filterValues[0], changedFilter];
-  
-  setFilterValues(updatedFilterSet);
+  const updatedFilterValues = filterValues.map((filter) =>
+    filter.name === type ? { ...filter, value } : filter
+  );
+  setFilterValues(updatedFilterValues);
 };
 
 const movies = data ? data.results : [];
@@ -70,32 +80,33 @@ console.log("Displayed movies:", displayedMovies);
 
 return (
   <>
-  <PageTemplate
-  title="Discover Movies"
-  movies={displayedMovies}
-  action={(movie: BaseMovieProps) => {
-    return (
-      <>
-      <AddToFavouritesIcon {...movie} />
-      <PlaylistAdd {...movie} />
-      </>
-    );
-  }}
-  />
-  
- <PaginationControls
-  page={page}
-  setPage={setPage}
-  totalPages={data?.total_pages}
-  isPlaceholderData={isPlaceholderData}
-/>
-  
-  
-  <MovieFilterUI
-  onFilterValuesChange={changeFilterValues}
-  titleFilter={filterValues[0].value}
-  genreFilter={filterValues[1].value}
-  />
+    <PageTemplate
+      title="Discover Movies"
+      movies={displayedMovies}
+      action={(movie: BaseMovieProps) => {
+        return (
+          <>
+            <AddToFavouritesIcon {...movie} />
+            <PlaylistAdd {...movie} />
+          </>
+        );
+      }}
+    />
+
+    <PaginationControls
+      page={page}
+      setPage={setPage}
+      totalPages={data?.total_pages}
+      isPlaceholderData={isPlaceholderData}
+    />
+
+    <MovieFilterUI
+      onFilterValuesChange={changeFilterValues}
+      titleFilter={filterValues[0].value}
+      genreFilter={filterValues[1].value}
+      ratingFilter={filterValues[2].value}
+      yearFilter={filterValues[3].value}
+    />
   </>
 );
 };
