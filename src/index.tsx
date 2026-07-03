@@ -38,7 +38,7 @@ const App = () => {
           <MoviesContextProvider>
             <SiteHeader />
             <Routes>
-              <Route path="/" element={<LoginPage />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/home" element={<HomePage />} />
               <Route path="/movies/favourites" element={<PrivateRoute><FavouriteMoviesPage /></PrivateRoute>} />
               <Route path="/movies/:id" element={<MoviePage />} />

@@ -31,7 +31,7 @@ const SiteHeader: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   
   const publicMenuOptions = [
-    { label: "Login", path: "/" },
+    { label: "Login", path: "/login" },
     { label: "Popular", path: "/movies/popular" },
     { label: "Upcoming", path: "/movies/upcoming" },
   ];
