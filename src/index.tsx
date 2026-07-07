@@ -19,6 +19,12 @@ import FavouriteTVSeriesPage from "./pages/favouriteTVSeriesPage";
 import AuthContextProvider from "./contexts/authContext";
 import LoginPage from "./pages/loginPage";
 import PrivateRoute from "./components/privateRoute";
+import { supabase } from "./supabaseClient";
+
+supabase.auth.getSession().then(({ data, error }) => {
+  console.log("Supabase session:", data.session);
+  console.log("Supabase error:", error);
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {
