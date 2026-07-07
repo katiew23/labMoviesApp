@@ -1,39 +1,74 @@
-import React, { useState, useCallback } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
+import type { User } from "@supabase/supabase-js";
+import { supabase } from "../supabaseClient";
 
 interface AuthContextInterface {
   isAuthenticated: boolean;
-  login: () => void;
-  logout: () => void;
+  user: User | null;
+  login: (user: User) => void;
+  logout: () => Promise<void>;
 }
 
 const initialContextState: AuthContextInterface = {
   isAuthenticated: false,
+  user: null,
   login: () => {},
-  logout: () => {},
+  logout: async () => {},
 };
 
-export const AuthContext = React.createContext<AuthContextInterface>(initialContextState);
+export const AuthContext =
+  React.createContext<AuthContextInterface>(initialContextState);
 
-const AuthContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+const AuthContextProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<User | null>(null);
 
-  
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return localStorage.getItem("isAuthenticated") === "true";
-  });
-  
-  const login = useCallback(() => {
-    localStorage.setItem("isAuthenticated", "true");
-    setIsAuthenticated(true);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user ?? null);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
-  
-  const logout = useCallback(() => {
-    localStorage.removeItem("isAuthenticated");
-    setIsAuthenticated(false);
+
+  const login = useCallback((user: User) => {
+    setUser(user);
   }, []);
-  
+
+  const logout = useCallback(async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error("Logout error:", error.message);
+      return;
+    }
+
+    setUser(null);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-    {children}
+    <AuthContext.Provider
+      value={{
+        isAuthenticated: user !== null,
+        user,
+        login,
+        logout,
+      }}
+    >
+      {children}
     </AuthContext.Provider>
   );
 };

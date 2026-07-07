@@ -20,6 +20,7 @@ import AuthContextProvider from "./contexts/authContext";
 import LoginPage from "./pages/loginPage";
 import PrivateRoute from "./components/privateRoute";
 import { supabase } from "./supabaseClient";
+import SignUpPage from "./pages/signUpPage";
 
 supabase.auth.getSession().then(({ data, error }) => {
   console.log("Supabase session:", data.session);
@@ -58,6 +59,7 @@ const App = () => {
               <Route path="/tv/:id" element={<TVSeriesDetailsPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="*" element={<Navigate to="/" />} />
+              <Route path="/signup" element={<SignUpPage />} />
             </Routes>
           </MoviesContextProvider>
         </AuthContextProvider>
