@@ -9,6 +9,7 @@ import PlaylistAdd from "../components/cardIcons/playlistAdd";
 //import Button from "@mui/material/Button";
 import PaginationControls from "../components/paginationControls";
 
+
 const PopularMoviesPage: React.FC = () => {
   const [page, setPage] = useState(1);
   

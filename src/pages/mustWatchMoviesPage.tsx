@@ -8,6 +8,7 @@ import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
 
+
 const MustWatchMoviesPage: React.FC = () => {
   const { mustWatch } = useContext(MoviesContext);
 

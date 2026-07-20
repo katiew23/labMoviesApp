@@ -108,3 +108,8 @@ export interface TVDetailsProps extends BaseTVProps {
   status: string;
   tagline: string;
 }
+export interface TemplateTVSeriesListPageProps {
+  title: string;
+  series: BaseTVProps[];
+  action: (series: BaseTVProps) => React.ReactNode;
+}

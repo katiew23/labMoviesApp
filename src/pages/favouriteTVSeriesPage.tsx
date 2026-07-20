@@ -3,13 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getTVSeries } from "../api/tmdb-api";
 import { BaseTVProps, DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
-import TVSeriesCard from "../components/tvSeriesCard";
-import Grid from "@mui/material/Grid";
 import { MoviesContext } from "../contexts/moviesContext";
 import RemoveFromFavouritesTVSeries from "../components/cardIcons/removeFromFavouritesTVSeries";
 import IconButton from "@mui/material/IconButton";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import TemplateTVSeriesListPage from "../components/templateTVSeriesList";
 
 
 const FavouriteTVSeriesPage: React.FC = () => {
@@ -64,44 +63,33 @@ const FavouriteTVSeriesPage: React.FC = () => {
   await reorderFavouriteTVSeries(newOrder);
 };
 
-  return (
-    <>
-      <h1>Favourite TV Series</h1>
+ return (
+  <TemplateTVSeriesListPage
+    title="Favourite TV Series"
+    series={displayedTVSeries}
+    action={(series: BaseTVProps) => (
+      <>
+        <IconButton
+          onClick={() => moveTVSeries(series.id, "up")}
+          disabled={favouriteTVSeries.indexOf(series.id) === 0}
+        >
+          <ArrowUpwardIcon />
+        </IconButton>
 
-      <Grid container spacing={5} style={{ padding: "15px" }}>
-        {displayedTVSeries.map((series) => (
-          <Grid key={series.id} item xs={12} sm={6} md={4} lg={3}>
-            <TVSeriesCard
-              series={series}
-              action={(series: BaseTVProps) => {
-                return (
-                  <>
-                    <IconButton
-                      onClick={() => moveTVSeries(series.id, "up")}
-                      disabled={favouriteTVSeries.indexOf(series.id) === 0}
-                    >
-                      <ArrowUpwardIcon />
-                    </IconButton>
+        <IconButton
+          onClick={() => moveTVSeries(series.id, "down")}
+          disabled={
+            favouriteTVSeries.indexOf(series.id) ===
+            favouriteTVSeries.length - 1
+          }
+        >
+          <ArrowDownwardIcon />
+        </IconButton>
 
-                    <IconButton
-                      onClick={() => moveTVSeries(series.id, "down")}
-                      disabled={
-                        favouriteTVSeries.indexOf(series.id) === favouriteTVSeries.length - 1
-                      }
-                    >
-                      <ArrowDownwardIcon />
-                    </IconButton>
-
-                    <RemoveFromFavouritesTVSeries {...series} />
-                  </>
-                );
-              }}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </>
-  );
+        <RemoveFromFavouritesTVSeries {...series} />
+      </>
+    )}
+  />
+);
 };
-
 export default FavouriteTVSeriesPage;

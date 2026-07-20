@@ -3,13 +3,13 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getTVSeries } from "../api/tmdb-api";
 import { BaseTVProps, DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
-import TVSeriesCard from "../components/tvSeriesCard";
-import Grid from "@mui/material/Grid";
 import TVSeriesFilterUI from "../components/tvSeriesFilterUI";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesTVSeries from "../components/cardIcons/addToFavouritesTVSeries";
 //import Button from "@mui/material/Button";
 import PaginationControls from "../components/paginationControls";
+import Typography from "@mui/material/Typography";
+import TemplateTVSeriesListPage from "../components/templateTVSeriesList";
 
 const tvSeriesFilters = [
   {
@@ -101,20 +101,15 @@ const TVSeriesPage: React.FC = () => {
   
   return (
     <>
-    <h1>Popular TV Series</h1>
-    
-    <Grid container spacing={5} style={{ padding: "15px" }}>
-    {sortedTVSeries.map((series) => (
-      <Grid key={series.id} item xs={12} sm={6} md={4} lg={3}>
-      <TVSeriesCard
-      series={series}
+      
+    <TemplateTVSeriesListPage
+      title="Popular TV Series"
+      series={sortedTVSeries}
       action={(series: BaseTVProps) => {
         return <AddToFavouritesTVSeries {...series} />;
       }}
       />
-      </Grid>
-    ))}
-    </Grid>
+      
     
     <PaginationControls
     page={page}
