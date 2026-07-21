@@ -1,26 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import MovieHeader from "../components/headerMovie";
-import { SampleTVSeries } from "./sampleData";
+import type { Meta, StoryObj } from "@storybook/react";
 import { MemoryRouter } from "react-router";
-
-import React from 'react';
+import MoviesContextProvider from "../contexts/moviesContext";
+import TVSeriesHeader from "../components/tvSeriesHeader";
+import { SampleTVSeries } from "./sampleData";
 
 const meta = {
-    title: "TV Series Details Page/TVSeriesHeader",
-    component: MovieHeader,
-    decorators: [
-        (Story: React.FC) => <MemoryRouter initialEntries={["/"]}><Story /></MemoryRouter>,
-    ],
-} satisfies Meta<typeof MovieHeader>;
+  title: "TV Series Page/TVSeriesHeader",
+  component: TVSeriesHeader,
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <MoviesContextProvider>
+          <Story />
+        </MoviesContextProvider>
+      </MemoryRouter>
+    ),
+  ],
+} satisfies Meta<typeof TVSeriesHeader>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
-    args: {
-        ...SampleTVSeries
-    }
+  args: {
+    ...SampleTVSeries,
+  },
 };
-
-Basic.storyName = "Default";

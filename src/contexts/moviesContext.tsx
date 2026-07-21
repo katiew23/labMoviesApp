@@ -42,7 +42,7 @@ const MoviesContextProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const [favourites, setFavourites] = useState<number[]>([]);
   const [mustWatch, setMustWatch] = useState<number[]>([]);
-  const [myReviews, setMyReviews] = useState<Review[]>([]);
+  const [, setMyReviews] = useState<Review[]>([]);
   const [favouriteTVSeries, setFavouriteTVSeries] = useState<number[]>(
     []
   );

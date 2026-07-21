@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 //import { BaseMovieProps, MovieDetailsProps } from "../types/interfaces";
+import { MovieDetailsProps } from "../types/interfaces";
+
 
 const WriteReviewPage: React.FC = () => {
     const location = useLocation()

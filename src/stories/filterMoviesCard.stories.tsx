@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import FilterMoviesCard from "../components/filterMoviesCard";
 import { MemoryRouter } from "react-router";
-import { action } from "@storybook/addon-actions";
+//import { action } from "@storybook/addon-actions";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import React from 'react';
+import { action } from "@storybook/addon-actions";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,7 +35,9 @@ export const Basic: Story = {
   args: {
     onUserInput: action("filter input"),
     titleFilter: "",
-    genreFilter: "All",
+    genreFilter: "",
+    ratingFilter: "",
+    yearFilter: "",
   },
 };
 Basic.storyName = "Default";

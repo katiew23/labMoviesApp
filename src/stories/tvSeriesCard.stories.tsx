@@ -4,7 +4,7 @@ import { SampleTVSeries } from "./sampleData";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
 import AddToFavouritesTVSeriesIcon from "../components/cardIcons/addToFavouritesTVSeries";
-import React from 'react';
+//import React from 'react';
 
 const meta = {
   title: 'TV Series Page/TVSeriesCard',
@@ -28,7 +28,7 @@ export const Basic: Story = {
 
 Basic.storyName = "Default";
 
-const sampleNoPoster = { ...SampleTVSeries, poster_path: undefined };
+const sampleNoPoster = { ...SampleTVSeries, poster_path: "" };
 
 export const Exceptional: Story = {
   args: {

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import FilterCard from "../filterTvSeriesCard";
-import Fab from "@mui/material/Fab";
+import FilterCard from "../filterTVSeriesCard";
 import Drawer from "@mui/material/Drawer";
 import { BaseTVProps } from "../../types/interfaces";
+import Fab from "@mui/material/Fab";
 
 export const nameFilter = (series: BaseTVProps, value: string): boolean => {
   return series.name.toLowerCase().search(String(value).toLowerCase()) !== -1;

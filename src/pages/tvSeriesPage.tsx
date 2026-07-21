@@ -8,7 +8,7 @@ import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesTVSeries from "../components/cardIcons/addToFavouritesTVSeries";
 //import Button from "@mui/material/Button";
 import PaginationControls from "../components/paginationControls";
-import Typography from "@mui/material/Typography";
+//import Typography from "@mui/material/Typography";
 import TemplateTVSeriesListPage from "../components/templateTVSeriesList";
 
 const tvSeriesFilters = [
@@ -46,7 +46,7 @@ const TVSeriesPage: React.FC = () => {
     error,
     isPending,
     isError,
-    isFetching,
+    //isFetching,
     isPlaceholderData,
   } = useQuery<DiscoverTV, Error>({
     queryKey: ["tvSeries", page],

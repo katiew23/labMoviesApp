@@ -30,7 +30,7 @@ const FavouriteTVSeriesPage: React.FC = () => {
   const tvSeries = data ? data.results : [];
 
   const displayedTVSeries = favouriteTVSeries
-  .map((tvId) => tvSeries.find((series) => series.id === tvId))
+  .map((tvId) => tvSeries.find((series: BaseTVProps | undefined) => series?.id === tvId))
   .filter((series): series is BaseTVProps => series !== undefined);
 
   const moveTVSeries = async (

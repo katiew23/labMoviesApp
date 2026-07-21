@@ -11,6 +11,7 @@ import WriteReview from "../components/cardIcons/writeReview";
 import IconButton from "@mui/material/IconButton";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { BaseMovieProps } from "../types/interfaces";
 
 
 const titleFiltering = {
@@ -91,7 +92,7 @@ const FavouriteMoviesPage: React.FC = () => {
     <PageTemplate
     title="Favourite Movies"
     movies={displayedMovies}
-    action={(movie) => {
+    action={(movie: BaseMovieProps) => {
       return (
         <>
         <IconButton
@@ -120,6 +121,8 @@ const FavouriteMoviesPage: React.FC = () => {
     onFilterValuesChange={changeFilterValues}
     titleFilter={filterValues[0].value}
     genreFilter={filterValues[1].value}
+    ratingFilter=""
+    yearFilter=""
     />
     </>
   );

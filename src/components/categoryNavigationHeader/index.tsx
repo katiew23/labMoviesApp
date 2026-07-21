@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const publicRoutes = [
   "/",

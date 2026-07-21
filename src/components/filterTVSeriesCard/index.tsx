@@ -108,7 +108,7 @@ const FilterTVSeriesCard: React.FC<FilterTVSeriesCardProps> = ({
     value={genreFilter}
     onChange={handleGenreChange}
     >
-    {genres.map((genre) => {
+    {genres.map((genre: { id: number; name: string }) => {
       return (
         <MenuItem key={genre.id} value={genre.id}>
         {genre.name}

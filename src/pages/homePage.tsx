@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
-import MovieFilterUI, {titleFilter, genreFilter} from "../components/movieFilterUI";
+import MovieFilterUI from "../components/movieFilterUI";
 import { DiscoverMovies, BaseMovieProps } from "../types/interfaces";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
   const [page, setPage] = useState(1);
   
   
-const { data, error, isPending, isError, isFetching, isPlaceholderData} = useQuery<DiscoverMovies, Error>({
+const { data, error, isPending, isError, isPlaceholderData } = useQuery<DiscoverMovies, Error>({
   queryKey: ["discover", page],
   queryFn: () => getMovies(page),
   placeholderData: keepPreviousData,

@@ -1,3 +1,5 @@
+import type React from "react";
+
 export interface BaseMovieProps {
   title: string;
   genre_ids?: number[];
@@ -17,10 +19,7 @@ export interface BaseMovieProps {
   vote_count: number;
   favourite?: boolean;
 }
-export interface BaseMovieListProps { 
-  movies: BaseMovieProps[];
-  selectFavourite: (movieId: number) => void;
-}   
+
 export interface MovieDetailsProps extends BaseMovieProps {
   genres: {
     id: number;
@@ -48,11 +47,17 @@ export interface MoviePageProps {
   images: MovieImage[];
 }
 
-export type FilterOption = "title" | "genre";
+export type FilterOption = "title" | "genre" | "rating" | "year";
 
 export interface BaseMovieListProps {
   movies: BaseMovieProps[];
   action: (m: BaseMovieProps) => React.ReactNode;
+}
+
+export interface MovieListPageTemplateProps {
+  title: string;
+  movies: BaseMovieProps[];
+  action: (movie: BaseMovieProps) => React.ReactNode;
 }
 
 export interface Review{

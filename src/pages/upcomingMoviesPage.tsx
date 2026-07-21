@@ -6,7 +6,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import PlaylistAdd from "../components/cardIcons/playlistAdd";
-import Button from "@mui/material/Button";
+//import Button from "@mui/material/Button";
 import PaginationControls from "../components/paginationControls";
 
 const UpcomingMoviesPage: React.FC = () => {
@@ -17,7 +17,7 @@ const UpcomingMoviesPage: React.FC = () => {
     error,
     isPending,
     isError,
-    isFetching,
+    //isFetching,
     isPlaceholderData,
   } = useQuery<DiscoverMovies, Error>({
     queryKey: ["upcoming", page],

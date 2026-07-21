@@ -18,7 +18,7 @@ const PopularMoviesPage: React.FC = () => {
     error,
     isPending,
     isError,
-    isFetching,
+    //isFetching, never used 
     isPlaceholderData,
   } = useQuery<DiscoverMovies, Error>({
     queryKey: ["popular", page],
