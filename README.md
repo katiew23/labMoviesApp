@@ -107,7 +107,20 @@ This feature builds on the favourites pattern from the labs but extends it with:
 
 ### Reviews
 
-Users can access a review form from the favourites page and submit a review for a selected movie.
+Authenticated users can access a review form from the Favourite Movies page and submit a review for a selected movie.
+
+Reviews are stored in Supabase and linked to the authenticated user's ID.
+
+Each review stores:
+
+- User ID
+- Movie ID
+- Author name
+- Review content
+- Rating
+- Creation date
+
+Supabase Row Level Security policies allow reviews to be read publicly while ensuring that users can only add or delete reviews associated with their own account.
 
 ### Authentication
 
@@ -223,15 +236,16 @@ Queries use cache keys such as:
 
 Supabase is used to persist user-specific application data.
 
-The following lists are stored in Supabase:
+The following application data is stored in Supabase:
 
-* Favourite movies
-* Favourite TV series
-* Must Watch movies
-* Favourite movie positions
-* Favourite TV series positions
+- Favourite movies
+- Favourite TV series
+- Must Watch movies
+- Favourite movie positions
+- Favourite TV series positions
+- Movie reviews
 
-Each database record is associated with the authenticated user's ID.
+User-specific database records are associated with the authenticated user's ID.
 
 Row Level Security policies ensure that users can only read, add, update, or remove their own records.
 
