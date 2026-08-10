@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { BaseMovieProps, DiscoverMovies } from "../types/interfaces";
@@ -8,8 +8,10 @@ import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import PlaylistAdd from "../components/cardIcons/playlistAdd";
 //import Button from "@mui/material/Button";
 import PaginationControls from "../components/paginationControls";
+import { AuthContext } from "../contexts/authContext";
 
 const UpcomingMoviesPage: React.FC = () => {
+  const { isAuthenticated } = useContext(AuthContext);
   const [page, setPage] = useState(1);
   
   const {
@@ -41,6 +43,9 @@ const UpcomingMoviesPage: React.FC = () => {
     title="Upcoming Movies"
     movies={movies}
     action={(movie: BaseMovieProps) => {
+      if (!isAuthenticated) {
+        return null; // Return null if the user is not authenticated
+      }
       return (
         <>
         <AddToFavouritesIcon {...movie} />

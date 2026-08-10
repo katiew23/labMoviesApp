@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
@@ -10,6 +10,7 @@ import PlaylistAdd from "../components/cardIcons/playlistAdd";
 //import Button from "@mui/material/Button";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import PaginationControls from "../components/paginationControls";
+import { AuthContext } from "../contexts/authContext";
 
 const movieFilters = [
   {
@@ -39,34 +40,37 @@ const movieFilters = [
 ];
 
 const HomePage: React.FC = () => {
+  const { isAuthenticated } = useContext(AuthContext);
   const [page, setPage] = useState(1);
   
   
-const { data, error, isPending, isError, isPlaceholderData } = useQuery<DiscoverMovies, Error>({
-  queryKey: ["discover", page],
-  queryFn: () => getMovies(page),
-  placeholderData: keepPreviousData,
-});
-
-//const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
-// ["discover", page],
-//() => getMovies(page)
-// );
-
-const { filterValues, setFilterValues, filterFunction } = useFiltering(movieFilters);
- 
-
-if (isPending) {
-  return <Spinner />;
-}
-
-if (isError) {
-  return <h1>{error.message}</h1>;
-}
-
-const changeFilterValues = (type: string, value: string) => {
-  const updatedFilterValues = filterValues.map((filter) =>
-    filter.name === type ? { ...filter, value } : filter
+  
+  
+  const { data, error, isPending, isError, isPlaceholderData } = useQuery<DiscoverMovies, Error>({
+    queryKey: ["discover", page],
+    queryFn: () => getMovies(page),
+    placeholderData: keepPreviousData,
+  });
+  
+  //const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
+  // ["discover", page],
+  //() => getMovies(page)
+  // );
+  
+  const { filterValues, setFilterValues, filterFunction } = useFiltering(movieFilters);
+  
+  
+  if (isPending) {
+    return <Spinner />;
+  }
+  
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+  
+  const changeFilterValues = (type: string, value: string) => {
+    const updatedFilterValues = filterValues.map((filter) =>
+      filter.name === type ? { ...filter, value } : filter
   );
   setFilterValues(updatedFilterValues);
 };
@@ -80,33 +84,36 @@ console.log("Displayed movies:", displayedMovies);
 
 return (
   <>
-    <PageTemplate
-      title="Discover Movies"
-      movies={displayedMovies}
-      action={(movie: BaseMovieProps) => {
-        return (
-          <>
-            <AddToFavouritesIcon {...movie} />
-            <PlaylistAdd {...movie} />
-          </>
-        );
-      }}
-    />
-
-    <PaginationControls
-      page={page}
-      setPage={setPage}
-      totalPages={data?.total_pages}
-      isPlaceholderData={isPlaceholderData}
-    />
-
-    <MovieFilterUI
-      onFilterValuesChange={changeFilterValues}
-      titleFilter={filterValues[0].value}
-      genreFilter={filterValues[1].value}
-      ratingFilter={filterValues[2].value}
-      yearFilter={filterValues[3].value}
-    />
+  <PageTemplate
+  title="Discover Movies"
+  movies={displayedMovies}
+  action={(movie: BaseMovieProps) => {
+    if (!isAuthenticated) {
+      return null; // Return null if the user is not authenticated
+    }
+    return (
+      <>
+      <AddToFavouritesIcon {...movie} />
+      <PlaylistAdd {...movie} />
+      </>
+    );
+  }}
+  />
+  
+  <PaginationControls
+  page={page}
+  setPage={setPage}
+  totalPages={data?.total_pages}
+  isPlaceholderData={isPlaceholderData}
+  />
+  
+  <MovieFilterUI
+  onFilterValuesChange={changeFilterValues}
+  titleFilter={filterValues[0].value}
+  genreFilter={filterValues[1].value}
+  ratingFilter={filterValues[2].value}
+  yearFilter={filterValues[3].value}
+  />
   </>
 );
 };
