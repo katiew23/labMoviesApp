@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import FilterMoviesCard from "../components/filterMoviesCard";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 //import { action } from "@storybook/addon-actions";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import React from 'react';

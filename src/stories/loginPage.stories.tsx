@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import LoginPage from "../pages/loginPage";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import React from "react";
 
 

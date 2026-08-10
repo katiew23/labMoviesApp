@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import TVSeriesDetails from "../components/tvSeriesDetails";
 import { SampleTVSeries } from "./sampleData";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import MoviesContextProvider from "../contexts/moviesContext";
 
 const meta = {

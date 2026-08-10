@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import TVSeriesCard from "../components/tvSeriesCard";
 import { SampleTVSeries } from "./sampleData";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import MoviesContextProvider from "../contexts/moviesContext";
 import AddToFavouritesTVSeriesIcon from "../components/cardIcons/addToFavouritesTVSeries";
 //import React from 'react';

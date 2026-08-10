@@ -1,6 +1,6 @@
 import React from "react";
 import SiteHeader from "../components/siteHeader";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {

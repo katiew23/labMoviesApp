@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import MovieHeader from "../components/headerMovie";
 import SampleMovie from "./sampleData";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 
 import React from 'react';
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import MoviesContextProvider from "../contexts/moviesContext";
 import TVSeriesHeader from "../components/tvSeriesHeader";
 import { SampleTVSeries } from "./sampleData";
