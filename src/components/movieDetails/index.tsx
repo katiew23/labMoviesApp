@@ -31,7 +31,7 @@ right: 20,
 },
 };
 
-const MovieDetails: React.FC = (movie) => {
+const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
 
 const [drawerOpen, setDrawerOpen] = useState(false); // New
 
