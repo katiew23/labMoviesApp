@@ -12,11 +12,11 @@ The home page displays discover movies from TMDB.
 
 Users can search and filter movies using multiple criteria:
 
-* Movie title
-* Genre
-* Minimum rating
-* Release year
-* Sorting options
+- Movie title
+- Genre
+- Minimum rating
+- Release year
+- Sorting options
 
 This feature uses a reusable filtering hook to apply multiple filter conditions to the displayed movie list.
 
@@ -34,10 +34,10 @@ A Popular Movies page was added using the TMDB popular movies endpoint.
 
 This feature includes:
 
-* A new list view
-* A new route
-* A navigation menu link
-* TanStack React Query caching using the `"popular"` query key
+- A new list view
+- A new route
+- A navigation menu link
+- TanStack React Query caching using the `"popular"` query key
 
 ### TV Series
 
@@ -45,15 +45,15 @@ A TV Series page was added using the TMDB TV series endpoints.
 
 This feature includes:
 
-* A TV series list page
-* TV series detail pages
-* A parameterised TV series route
-* TV series favourites
-* TV genre filtering
-* Multi-criteria search and filtering for TV series
-* Sorting by name, rating, and first air date
-* Pagination
-* TanStack React Query caching
+- A TV series list page
+- TV series detail pages
+- A parameterised TV series route
+- TV series favourites
+- TV genre filtering
+- Multi-criteria search and filtering for TV series
+- Sorting by name, rating, and first air date
+- Pagination
+- TanStack React Query caching
 
 A reusable TV series list template was created to provide consistent styling across the main TV Series page and the Favourite TV Series page.
 
@@ -65,11 +65,11 @@ Favourite movies are stored in Supabase against the authenticated user's ID and 
 
 Users can:
 
-* Add movies to favourites
-* Remove movies from favourites
-* Move favourite movies up or down
-* Save the selected order in Supabase
-* Reload the saved order after refreshing or logging back in
+- Add movies to favourites
+- Remove movies from favourites
+- Move favourite movies up or down
+- Save the selected order in Supabase
+- Reload the saved order after refreshing or logging back in
 
 The ordered favourites functionality extends the original favourites pattern from the labs by adding persistent user-controlled ordering.
 
@@ -81,11 +81,11 @@ Favourite TV series are stored in Supabase against the authenticated user's ID a
 
 Users can:
 
-* Add TV series to favourites
-* Remove TV series from favourites
-* Move favourite TV series up or down
-* Save the selected order in Supabase
-* Reload the saved order after refreshing or logging back in
+- Add TV series to favourites
+- Remove TV series from favourites
+- Move favourite TV series up or down
+- Save the selected order in Supabase
+- Reload the saved order after refreshing or logging back in
 
 ### Must Watch List
 
@@ -97,13 +97,13 @@ Users can also remove movies from the Must Watch list.
 
 This feature builds on the favourites pattern from the labs but extends it with:
 
-* A separate Must Watch state array
-* Supabase persistence
-* An add-to-must-watch action
-* A remove-from-must-watch action
-* A dedicated Must Watch page
-* A protected route
-* A navigation link
+- A separate Must Watch state array
+- Supabase persistence
+- An add-to-must-watch action
+- A remove-from-must-watch action
+- A dedicated Must Watch page
+- A protected route
+- A navigation link
 
 ### Reviews
 
@@ -128,11 +128,11 @@ The app uses Supabase Authentication.
 
 Users can:
 
-* Create an account
-* Log in
-* Log out
-* Maintain an authenticated session after refreshing the application
-* Access user-specific favourites and Must Watch data
+- Create an account
+- Log in
+- Log out
+- Maintain an authenticated session after refreshing the application
+- Access user-specific favourites and Must Watch data
 
 The authentication state is managed through an AuthContext which listens for Supabase authentication state changes.
 
@@ -142,22 +142,20 @@ The app includes both public and private routes.
 
 Public routes include:
 
-* Discover Movies
-* Popular Movies
-* Upcoming Movies
-* Movie Details
-* TV Series
-* TV Series Details
-* Login
-* Sign Up
+- Discover Movies
+- Popular Movies
+- Upcoming Movies
+- Movie Details
+- TV Series
+- TV Series Details
+- Login
+- Sign Up
 
 Protected routes include:
 
-* Favourite Movies
-* Must Watch Movies
-* Favourite TV Series
-
-If a logged-out user tries to access a protected route, the PrivateRoute component redirects them to the login page.
+- Favourite Movies
+- Must Watch Movies
+- Favourite TV Series
 
 ### Authenticated Navigation
 
@@ -167,14 +165,22 @@ Logged-out users can access the public movie and TV series pages.
 
 Logged-in users can additionally access:
 
-* Favourite Movies
-* Must Watch Movies
-* Favourite TV Series
-* Logout
+- Favourite Movies
+- Must Watch Movies
+- Favourite TV Series
+- Logout
+- Write a Review
+- Delete Favourites
+- Reorder Favourite Movies
 
-A reusable category navigation header was also created. Its left and right arrows allow users to move between the available content categories.
+A reusable category navigation header was also created. Its left and right arrows allow users to move between the main browsing categories:
 
-The available routes used by the category navigation depend on the user's authentication state.
+- Discover Movies
+- Popular Movies
+- Upcoming Movies
+- TV Series
+
+User-specific pages such as Favourites and Must Watch remain available through the main navigation menu.
 
 ## Routing
 
@@ -182,20 +188,20 @@ The app uses React Router for client-side navigation.
 
 Current routes include:
 
-* `/` - Discover Movies
-* `/home` - Discover Movies
-* `/movies/:id` - Movie Details
-* `/movies/favourites` - Favourite Movies
-* `/movies/upcoming` - Upcoming Movies
-* `/movies/popular` - Popular Movies
-* `/movies/mustwatch` - Must Watch Movies
-* `/reviews/form` - Add Movie Review
-* `/reviews/:id` - Movie Review
-* `/login` - Login Page
-* `/signup` - Sign Up Page
-* `/tv` - TV Series
-* `/tv/:id` - TV Series Details
-* `/tv/favourites` - Favourite TV Series
+- `/` - Discover Movies
+- `/home` - Discover Movies
+- `/movies/:id` - Movie Details
+- `/movies/favourites` - Favourite Movies
+- `/movies/upcoming` - Upcoming Movies
+- `/movies/popular` - Popular Movies
+- `/movies/mustwatch` - Must Watch Movies
+- `/reviews/form` - Add Movie Review
+- `/reviews/:id` - Movie Review
+- `/login` - Login Page
+- `/signup` - Sign Up Page
+- `/tv` - TV Series
+- `/tv/:id` - TV Series Details
+- `/tv/favourites` - Favourite TV Series
 
 The favourites and Must Watch routes are protected and require the user to be logged in.
 
@@ -213,24 +219,24 @@ TanStack React Query is used to retrieve and cache data from the TMDB API.
 
 Examples include:
 
-* Discover movies
-* Upcoming movies
-* Popular movies
-* Movie details
-* TV series
-* TV series details
-* Movie genres
-* TV genres
+- Discover movies
+- Upcoming movies
+- Popular movies
+- Movie details
+- TV series
+- TV series details
+- Movie genres
+- TV genres
 
 The app is wrapped in a `QueryClientProvider`.
 
 Queries use cache keys such as:
 
-* `"discover"`
-* `"upcoming"`
-* `"popular"`
-* `"movie"`
-* `"tvSeries"`
+- `"discover"`
+- `"upcoming"`
+- `"popular"`
+- `"movie"`
+- `"tvSeries"`
 
 ## Supabase Persistence
 
@@ -253,7 +259,7 @@ The saved data is loaded when the user logs in and cleared from the local contex
 
 ## Ordered Favourites
 
-Movie and TV series favourites can be reordered using up and down controls.
+Movie and TV series favourites can be reordered using up and down controls, and each favourite displays its current position in the ordered list.
 
 When the user changes the order:
 
@@ -274,17 +280,158 @@ Storybook allows these components to be viewed and tested independently from the
 
 ## Technologies Used
 
-* React
-* TypeScript
-* Vite
-* React Router
-* TanStack React Query
-* Material UI
-* Supabase Authentication
-* Supabase Database
-* TMDB API
-* React Context API
-* Storybook
+- React
+- TypeScript
+- Vite
+- React Router
+- TanStack React Query
+- Material UI
+- Supabase Authentication
+- Supabase Database
+- TMDB API
+- React Context API
+- Storybook
+
+## AI Usage
+
+AI was used as a learning and development aid during this assignment.
+
+I used ChatGPT, primarily GPT-5.6 Sol, to help explain React, TypeScript, TanStack React Query, Supabase, authentication, Row Level Security, component structure, and debugging.
+
+I did not use AI simply to generate the complete application. I used it mainly to:
+
+- Explain errors and help identify where problems were occurring.
+- Explain existing React and TypeScript code.
+- Help understand how components, props, contexts, hooks, and routing work.
+- Explain TanStack React Query caching and pagination.
+- Help understand and implement Supabase authentication and persistence.
+- Explain Supabase Row Level Security policies.
+- Help connect existing application features such as favourites, Must Watch, TV favourites and reviews to Supabase.
+- Review UI components and suggest small styling changes.
+- Help update documentation and README content.
+- Review code changes and provide small targeted changes rather than replacing complete features where possible.
+- Prepare questions and explanations so that I can describe how the application works.
+
+Examples of prompts used during development include:
+
+- "Explain why this React component is not rendering."
+- "Where should I add this authentication check?"
+- "Explain how React Query pagination works in this page."
+- "How do I save favourites for the logged-in user in Supabase?"
+- "What Row Level Security policy should I use so users can only modify their own records?"
+- "How can I save my existing movie review form to Supabase?"
+- "Which component controls the styling of my reusable movie cards?"
+- "How can I change this UI without changing the existing functionality?"
+- "Explain what this code is doing without over-explaining it."
+- "Does this feature meet the requirements in the Full Stack 2 marking rubric?"
+
+AI-generated suggestions were tested in the application and adjusted where necessary. I reviewed the code being added and used AI explanations to understand the implementation rather than relying on code without understanding it.
+
+# AI Usage Log
+
+## AI Tool
+
+- Tool: ChatGPT
+- Model: GPT-5.6 Sol
+- Purpose: Learning aid, debugging support, code explanation, and implementation guidance.
+
+## Example Prompts and Usage
+
+### React and Component Structure
+
+**Prompt:**  
+"Which file is changing all the movie cards?"
+
+**Purpose:**  
+To find the reusable MovieCard component so I could change the card design once instead of changing every page.
+
+**Prompt:**  
+"Do I have too many components?"
+
+**Purpose:**  
+To check whether my component structure was too complicated or whether the components were being reused properly, it felt messy with too many and im still unsure if we could narrow them down? 
+
+### Authentication
+
+**Prompt:**  
+"I don't think people should be able to favourite or add to Must Watch if they are not logged in. Where do I change that?"
+
+**Purpose:**  
+To understand where the authentication check should go without changing the reusable MovieCard itself.
+
+### Supabase Persistence
+
+**Prompt:**  
+"How do I save favourites in Supabase so they are still there when I log back in?"
+
+**Purpose:**  
+To understand how to connect favourites to the logged-in user's Supabase account.
+
+**Prompt:**  
+"Which RLS option do I pick so a user can only change their own data?"
+
+**Purpose:**  
+To understand how Supabase Row Level Security uses the logged-in user's ID.
+
+**Prompt:**  
+"Can I save the reviews in Supabase too?"
+
+**Purpose:**  
+To add persistence to the review feature that was already in the application.
+
+### TanStack React Query
+
+**Prompt:**  
+"Can you explain what this pagination code is doing?"
+
+**Purpose:**  
+To understand how React Query was loading and caching different pages of movie data.
+
+### UI Development
+
+**Prompt:**  
+"I hate the blue. Where is that colour coming from, what card controls this?"
+
+**Purpose:**  
+To understand how Material UI colours were being applied and how to change them without changing the functionality.
+
+**Prompt:**  
+"Can I change this card once and have it change everywhere?"
+
+**Purpose:**  
+To understand how reusable React components allow the same UI change to appear across multiple pages.
+
+### Debugging
+
+**Prompt:**  
+"Why is this not working?"
+
+**Purpose:**  
+To identify errors in the code and understand what part needed to be changed.
+
+**Prompt:**  
+"Where does this action actually come from?"
+
+**Purpose:**  
+To trace props and component usage through the application before making a change.
+
+### Assignment Review
+
+**Prompt:**  
+"Based on the rubric, where am I with the project?"
+
+**Purpose:**  
+To compare the features I had completed with the grading bands and decide what was still worth working on.
+
+## How AI Output Was Used
+
+AI responses were used as guidance rather than accepted without review. Suggested changes were applied to the existing project structure, tested in the running application, and adjusted where necessary.
+
+AI was also used to explain unfamiliar techniques and to help identify the appropriate file or component to modify before changes were made.
+
+I retained responsibility for testing the application and understanding the code included in the final submission.
+
+I also used AI to write my readme.
 
 ## Development Notes
 
