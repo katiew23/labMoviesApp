@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FilterCard from "../filterMoviesCard";
-import Fab from "@mui/material/Fab";
+import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import { BaseMovieProps } from "../../types/interfaces";
 
@@ -16,13 +16,13 @@ export const genreFilter = (movie: BaseMovieProps, value: string) => {
 
 const styles = {
   root: {
-    backgroundColor: "#bfbfbf",
+    backgroundColor: "#000000",
   },
   fab: {
-    marginTop: 8,
     position: "fixed",
-    top: 20,
-    right: 2,
+    top: 90,
+    left: 200,
+    zIndex: 1200,
   },
 };
 
@@ -42,31 +42,37 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
   yearFilter,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  
   return (
     <>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        Search & Filter
-      </Fab>
-
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      >
-        <FilterCard
-          onUserInput={onFilterValuesChange}
-          titleFilter={titleFilter}
-          genreFilter={genreFilter}
-          ratingFilter={ratingFilter}
-          yearFilter={yearFilter}
-        />
-      </Drawer>
+    <Button
+    variant="contained"
+    onClick={() => setDrawerOpen(true)}
+    sx={{
+      ...styles.fab,
+      backgroundColor: "#1f1f1f",
+      color: "#ffffff",
+      "&:hover": {
+        backgroundColor: "#333333",
+      },
+    }}
+    >
+    Search & Filter Tv Series
+    </Button>
+    
+    <Drawer
+    anchor="left"
+    open={drawerOpen}
+    onClose={() => setDrawerOpen(false)}
+    >
+    <FilterCard
+    onUserInput={onFilterValuesChange}
+    titleFilter={titleFilter}
+    genreFilter={genreFilter}
+    ratingFilter={ratingFilter}
+    yearFilter={yearFilter}
+    />
+    </Drawer>
     </>
   );
 };

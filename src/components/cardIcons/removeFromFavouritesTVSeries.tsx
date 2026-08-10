@@ -17,7 +17,7 @@ const RemoveFromFavouritesTVSeries: React.FC<BaseTVProps> = (tvSeries) => {
             aria-label="remove from favorites"  
             onClick={onUserRequest}
         >
-            <DeleteIcon color="primary" fontSize="large" />
+            <DeleteIcon sx={{ color: "#c89b3c" }} />
         </IconButton>
     );
 };

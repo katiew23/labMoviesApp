@@ -14,7 +14,7 @@ const AddToFavouritesIcon: React.FC<BaseMovieProps> = (movie) => {
 
   return (
     <IconButton aria-label="add to favorites" onClick={onUserSelect}>
-      <FavoriteIcon color="primary" fontSize="large" />
+      <FavoriteIcon sx={{ color: "#d32f2f" }} />
     </IconButton>
   );
 };

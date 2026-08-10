@@ -73,7 +73,14 @@ const LoginPage: React.FC = () => {
     <Button
     variant="contained"
     fullWidth
-    sx={{ mt: 3 }}
+    sx={{
+      mt: 3,
+      backgroundColor: "#1f1f1f",
+      color: "#ffffff",
+      "&:hover": {
+        backgroundColor: "#333333",
+      },
+    }}
     onClick={handleLogin}
     >
     Login

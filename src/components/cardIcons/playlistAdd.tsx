@@ -17,7 +17,7 @@ const PlaylistAdd: React.FC<BaseMovieProps> = (movie) => {
 
   return (
     <IconButton aria-label="add to must watch" onClick={handleAddToMustWatch}>
-      <PlaylistAddIcon color="primary" fontSize="large" />
+      <PlaylistAddIcon sx={{ color: "#c89b3c" }} />
     </IconButton>
   );
 };

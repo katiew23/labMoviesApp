@@ -10,14 +10,12 @@ import { AuthContext } from "../../contexts/authContext";
 const publicRoutes = [
   "/",
   "/movies/popular",
-  "/movies/upcoming",
   "/tv",
 ];
 
 const authenticatedRoutes = [
   "/",
   "/movies/popular",
-  "/movies/upcoming",
   "/movies/favourites",
   "/movies/mustwatch",
   "/tv",
@@ -64,7 +62,7 @@ const CategoryNavigationHeader: React.FC<
     <Grid container alignItems="center">
       <Grid item xs={2} sx={{ textAlign: "center" }}>
         <IconButton onClick={goPrevious}>
-          <ArrowBackIcon color="primary" fontSize="large" />
+          <ArrowBackIcon sx={{ color: "#1f1f1f" }} />
         </IconButton>
       </Grid>
 
@@ -76,7 +74,7 @@ const CategoryNavigationHeader: React.FC<
 
       <Grid item xs={2} sx={{ textAlign: "center" }}>
         <IconButton onClick={goNext}>
-          <ArrowForwardIcon color="primary" fontSize="large" />
+          <ArrowForwardIcon sx={{ color: "#1f1f1f" }} />
         </IconButton>
       </Grid>
     </Grid>
