@@ -12,6 +12,7 @@ import ratings from "./ratingCategories";
 import { BaseMovieProps, Review } from "../../types/interfaces";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { supabase } from "../../supabaseClient";
 
 
 
@@ -50,12 +51,36 @@ const ReviewForm: React.FC<BaseMovieProps> = (movie) => {
   
   
   
-  const onSubmit: SubmitHandler<Review> = (review) => {
+  const onSubmit: SubmitHandler<Review> = async (review) => {
     review.movieId = movie.id;
     review.rating = rating;
+    
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    
+    if (!user) {
+      console.error("No authenticated user found.");
+      return;
+    }
+    
+    const { error } = await supabase
+    .from("Reviews")
+    .insert({
+      user_id: user.id,
+      movie_id: movie.id,
+      author: review.author,
+      review: review.content,
+      rating: rating,
+    });
+    
+    if (error) {
+      console.error("Error saving review:", error);
+      return;
+    }
+    
     context.addReview(movie, review);
-    setOpen(true); // NEW
-    // console.log(review);
+    setOpen(true);
   };
   
   
