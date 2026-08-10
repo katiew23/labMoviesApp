@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { BaseMovieProps } from "../types/interfaces";
+import Typography from "@mui/material/Typography";
 
 
 const titleFiltering = {
@@ -31,7 +32,7 @@ const FavouriteMoviesPage: React.FC = () => {
     [titleFiltering, genreFiltering]
   );
   
-  // Create an array of queries and run them in parallel.
+  //create an array of queries and run them in parallel.
   const favouriteMovieQueries = useQueries({
     queries: movieIds.map((movieId) => {
       return {
@@ -41,7 +42,7 @@ const FavouriteMoviesPage: React.FC = () => {
     }),
   });
   
-  // Check if any of the parallel queries is still loading.
+  //check if any of the parallel queries is still loading.
   const isPending = favouriteMovieQueries.find((m) => m.isPending === true);
   
   if (isPending) {
@@ -93,23 +94,38 @@ const FavouriteMoviesPage: React.FC = () => {
     title="Favourite Movies"
     movies={displayedMovies}
     action={(movie: BaseMovieProps) => {
+      const position = movieIds.indexOf(movie.id) + 1;
+      
       return (
         <>
+        <Typography
+        variant="body2"
+        sx={{
+          fontWeight: 600,
+          mr: 1,
+        }}
+        >
+        #{position}
+        </Typography>
+        
         <IconButton
+        size="small"
         onClick={() => moveMovie(movie.id, "up")}
         disabled={movieIds.indexOf(movie.id) === 0}
         >
-        <ArrowUpwardIcon />
+        <ArrowUpwardIcon fontSize="small" />
         </IconButton>
         
         <IconButton
+        size="small"
         onClick={() => moveMovie(movie.id, "down")}
         disabled={
           movieIds.indexOf(movie.id) === movieIds.length - 1
         }
         >
-        <ArrowDownwardIcon />
+        <ArrowDownwardIcon fontSize="small" />
         </IconButton>
+        
         <RemoveFromFavourites {...movie} />
         <WriteReview {...movie} />
         </>
