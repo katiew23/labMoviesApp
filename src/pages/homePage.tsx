@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { getMovies } from "../api/tmdb-api";
+import { getFilteredMovies, searchMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI from "../components/movieFilterUI";
 import { DiscoverMovies, BaseMovieProps } from "../types/interfaces";
@@ -11,6 +11,7 @@ import PlaylistAdd from "../components/cardIcons/playlistAdd";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import PaginationControls from "../components/paginationControls";
 import { AuthContext } from "../contexts/authContext";
+
 
 const movieFilters = [
   {
@@ -45,19 +46,49 @@ const HomePage: React.FC = () => {
   
   
   
-  
+  const { filterValues, setFilterValues, filterFunction } = useFiltering(movieFilters);
+
   const { data, error, isPending, isError, isPlaceholderData } = useQuery<DiscoverMovies, Error>({
-    queryKey: ["discover", page],
-    queryFn: () => getMovies(page),
-    placeholderData: keepPreviousData,
-  });
+  queryKey: [
+    "discover",
+    page,
+    filterValues[0].value,
+    filterValues[1].value,
+    filterValues[2].value,
+    filterValues[3].value,
+  ],
+  queryFn: () => {
+    const title = filterValues[0].value;
+
+    if (title) {
+      return searchMovies(title, page);
+    }
+
+    return getFilteredMovies(
+      page,
+      filterValues[1].value,
+      filterValues[2].value,
+      filterValues[3].value
+    );
+  },
+  placeholderData: keepPreviousData,
+});
   
   //const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
   // ["discover", page],
   //() => getMovies(page)
   // );
   
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(movieFilters);
+ 
+  
+  //useEffect(() => {
+    //setFilterValues(
+      //movieFilters.map((filter) => ({
+       // name: filter.name,
+       // value: filter.value,
+     // }))
+   // );
+  //}, [page]);
   
   
   if (isPending) {

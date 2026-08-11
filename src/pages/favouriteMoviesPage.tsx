@@ -4,8 +4,8 @@ import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "@tanstack/react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-import useFiltering from "../hooks/useFiltering";
-import MovieFilterUI, { titleFilter, genreFilter, } from "../components/movieFilterUI";
+//import useFiltering from "../hooks/useFiltering";
+//import MovieFilterUI, { titleFilter, genreFilter, } from "../components/movieFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
 import WriteReview from "../components/cardIcons/writeReview";
 import IconButton from "@mui/material/IconButton";
@@ -15,22 +15,22 @@ import { BaseMovieProps } from "../types/interfaces";
 import Typography from "@mui/material/Typography";
 
 
-const titleFiltering = {
-  name: "title",
-  value: "",
-  condition: titleFilter,
-};
-const genreFiltering = {
-  name: "genre",
-  value: "0",
-  condition: genreFilter,
-};
+//const titleFiltering = {
+  //name: "title",
+ // value: "",
+ // condition: titleFilter,
+//};
+//const genreFiltering = {
+ // name: "genre",
+ // value: "0",
+ // condition: genreFilter,
+//};
 
 const FavouriteMoviesPage: React.FC = () => {
   const { favourites: movieIds, reorderFavourites } = useContext(MoviesContext);
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
-    [titleFiltering, genreFiltering]
-  );
+  //const { filterValues, setFilterValues, filterFunction } = useFiltering(
+    //[titleFiltering, genreFiltering]
+  //);
   
   //create an array of queries and run them in parallel.
   const favouriteMovieQueries = useQueries({
@@ -52,16 +52,15 @@ const FavouriteMoviesPage: React.FC = () => {
   const allFavourites = favouriteMovieQueries
   .map((q) => q.data)
   .filter((movie) => movie !== undefined);
-  const displayedMovies = allFavourites
-  ? filterFunction(allFavourites)
-  : [];
+  const displayedMovies = allFavourites;
+ 
   
-  const changeFilterValues = (type: string, value: string) => {
-    const changedFilter = { name: type, value: value };
-    const updatedFilterSet =
-    type === "title" ? [changedFilter, filterValues[1]] : [filterValues[0], changedFilter];
-    setFilterValues(updatedFilterSet);
-  };
+  //const changeFilterValues = (type: string, value: string) => {
+   // const changedFilter = { name: type, value: value };
+   // const updatedFilterSet =
+  //  type === "title" ? [changedFilter, filterValues[1]] : [filterValues[0], changedFilter];
+   // setFilterValues(updatedFilterSet);
+ // };
   
   const moveMovie = async (
     movieId: number,
@@ -132,16 +131,8 @@ const FavouriteMoviesPage: React.FC = () => {
       );
     }}
     />
-    
-    <MovieFilterUI
-    onFilterValuesChange={changeFilterValues}
-    titleFilter={filterValues[0].value}
-    genreFilter={filterValues[1].value}
-    ratingFilter=""
-    yearFilter=""
-    />
-    </>
-  );
+  </>
+);
 };
-
-export default FavouriteMoviesPage;
+    
+   export default FavouriteMoviesPage;

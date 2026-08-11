@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getTVSeries } from "../api/tmdb-api";
+import { getFilteredTVSeries, searchTVSeries } from "../api/tmdb-api";
 import { BaseTVProps, DiscoverTV } from "../types/interfaces";
 import Spinner from "../components/spinner";
 import TVSeriesFilterUI from "../components/tvSeriesFilterUI";
@@ -38,26 +38,51 @@ const tvSeriesFilters = [
   },
 ];
 
+
+
 const TVSeriesPage: React.FC = () => {
   const [page, setPage] = useState(1);
-  
+
+  const { filterValues, setFilterValues } =
+    useFiltering(tvSeriesFilters);
+
+  const [sortBy, setSortBy] = useState("name");
+
   const {
     data,
     error,
     isPending,
     isError,
-    //isFetching,
     isPlaceholderData,
   } = useQuery<DiscoverTV, Error>({
-    queryKey: ["tvSeries", page],
-    queryFn: () => getTVSeries(page),
+    queryKey: [
+      "tvSeries",
+      page,
+      filterValues[0].value,
+      filterValues[1].value,
+      filterValues[2].value,
+      filterValues[3].value,
+    ],
+
+    queryFn: () => {
+      const name = filterValues[0].value;
+
+      if (name) {
+        return searchTVSeries(name, page);
+      }
+
+      return getFilteredTVSeries(
+        page,
+        filterValues[1].value,
+        filterValues[2].value,
+        filterValues[3].value
+      );
+    },
+
     placeholderData: keepPreviousData,
-  });
+  });  
   
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(tvSeriesFilters);
-  
-  const [sortBy, setSortBy] = useState("name");
-  
+    
   if (isPending) {
     return <Spinner />;
   }
@@ -74,12 +99,13 @@ const TVSeriesPage: React.FC = () => {
       filter.name === type ? { ...filter, value } : filter
     );
 
+    setPage(1);
     setFilterValues(updatedFilterSet);
   }
 };
   
   const tvSeries = data ? data.results : [];
-  const displayedTVSeries = filterFunction(tvSeries);
+  const displayedTVSeries = tvSeries;
   
   const sortedTVSeries = [...displayedTVSeries].sort((a, b) => {
     if (sortBy === "rating") {

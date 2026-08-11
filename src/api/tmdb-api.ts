@@ -137,3 +137,71 @@ export const getTVGenres = () => {
     throw error;
   });
 };
+
+export const getFilteredMovies = (
+  page = 1,
+  genre = "0",
+  rating = "0",
+  year = ""
+) => {
+  let url =
+    `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}` +
+    `&language=en-US&include_adult=false&include_video=false&page=${page}`;
+
+  if (genre !== "0") url += `&with_genres=${genre}`;
+  if (rating !== "0") url += `&vote_average.gte=${rating}`;
+  if (year !== "") url += `&primary_release_year=${year}`;
+
+  return fetch(url).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to fetch movies. Response status: ${response.status}`);
+    }
+    return response.json();
+  });
+};
+
+export const searchMovies = (title: string, page = 1) => {
+  return fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_KEY}` +
+    `&language=en-US&include_adult=false&page=${page}&query=${encodeURIComponent(title)}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to search movies. Response status: ${response.status}`);
+    }
+    return response.json();
+  });
+};
+
+export const getFilteredTVSeries = (
+  page = 1,
+  genre = "0",
+  rating = "0",
+  year = ""
+) => {
+  let url =
+    `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}` +
+    `&language=en-US&include_adult=false&page=${page}`;
+
+  if (genre !== "0") url += `&with_genres=${genre}`;
+  if (rating !== "0") url += `&vote_average.gte=${rating}`;
+  if (year !== "") url += `&first_air_date_year=${year}`;
+
+  return fetch(url).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to fetch TV series. Response status: ${response.status}`);
+    }
+    return response.json();
+  });
+};
+
+export const searchTVSeries = (name: string, page = 1) => {
+  return fetch(
+    `https://api.themoviedb.org/3/search/tv?api_key=${import.meta.env.VITE_TMDB_KEY}` +
+    `&language=en-US&page=${page}&query=${encodeURIComponent(name)}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Unable to search TV series. Response status: ${response.status}`);
+    }
+    return response.json();
+  });
+};
