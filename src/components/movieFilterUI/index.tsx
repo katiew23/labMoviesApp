@@ -57,7 +57,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
       },
     }}
     >
-    Search & Filter Tv Series
+    Search & Filter Movies
     </Button>
     
     <Drawer

@@ -89,7 +89,7 @@ return (
   movies={displayedMovies}
   action={(movie: BaseMovieProps) => {
     if (!isAuthenticated) {
-      return null; // Return null if the user is not authenticated
+      return null; //return nothin if the user is not authenticated
     }
     return (
       <>

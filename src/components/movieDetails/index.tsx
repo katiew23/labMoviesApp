@@ -33,7 +33,7 @@ right: 20,
 
 const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
 
-const [drawerOpen, setDrawerOpen] = useState(false); // New
+const [drawerOpen, setDrawerOpen] = useState(false); 
 
 return (
     <>

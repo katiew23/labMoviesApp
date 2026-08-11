@@ -44,7 +44,7 @@ const UpcomingMoviesPage: React.FC = () => {
     movies={movies}
     action={(movie: BaseMovieProps) => {
       if (!isAuthenticated) {
-        return null; // Return null if the user is not authenticated
+        return null; 
       }
       return (
         <>

@@ -58,8 +58,8 @@ const App = () => {
               <Route path="/tv/favourites" element={<PrivateRoute><FavouriteTVSeriesPage /></PrivateRoute>} />
               <Route path="/tv/:id" element={<TVSeriesDetailsPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="*" element={<Navigate to="/" />} />
               <Route path="/signup" element={<SignUpPage />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </MoviesContextProvider>
         </AuthContextProvider>
